@@ -47,30 +47,28 @@ Ansible最初由Michael DeHaan編寫, 並於2015年被Red Hat收購([wiki](https
 
 **Playbooks**
 
-> 它包含了Plays(Ansible執行的基本單位), 並以yaml格式撰寫, 相較ad-hoc用於簡單不重覆工作場景(例: reboot),Playbooks相當於是
-
-> 一份腳本,可完成更複雜的場景。
+> 它包含了Plays(Ansible執行的基本單位), 並以yaml格式撰寫, 相較ad-hoc用於簡單不重覆工作場景(例: reboot),</br>
+> Playbooks相當於是一份腳本,可完成更複雜的場景。
 
 * Plays 
 
-> 它負責將受到管理的節點對映到task(任務)上, 並包含了變數、角色、有序的任務清單, 且可重覆執行。
+  > 它負責將受到管理的節點對映到task(任務)上, 並包含了變數、角色、有序的任務清單, 且可重覆執行。
 
 * Roles
 
-> 是一種結構化、可重用的組織方式, 用來把任務、變數、檔案、模板等資源打包在一起, 方便管理與重複使用。
+  > 是一種結構化、可重用的組織方式, 用來把任務、變數、檔案、模板等資源打包在一起, 方便管理與重複使用。
 
 * Tasks
 
-> 定義了被管理的節點如何操作。
+  > 定義了被管理的節點如何操作。
 
 * handler
 
-> 這是一種特殊形式的任務, 只有在先前任務通知且導致「變更」狀態時才會執行。
+  > 這是一種特殊形式的任務, 只有在先前任務通知且導致「變更」狀態時才會執行。
 
 **Modules**
 
-> Ansible複製並在每個受管理節點執行的程式碼或二進位檔（必要時）, 以完成每個任務中定義的動作。
-
+> Ansible複製並在每個受管理節點執行的程式碼或二進位檔（必要時）, 以完成每個任務中定義的動作。</br>
 > 每個模組都有其特定用途，從管理特定類型資料庫的使用者，到管理特定網路裝置上的 VLAN 介面。
 
 **Plugins**
@@ -86,7 +84,37 @@ Ansible最初由Michael DeHaan編寫, 並於2015年被Red Hat收購([wiki](https
 ![How ansible works.](./img/how_ansible_works.png "How ansible works.")
 
 * Ansible是被設計成Agentless的架構, 其原理是透過SSH或WinRM方式連線目標節點進行操作。
+
 * 除了Linux、Windows外, 基本上也可以操作Unix, 但Unix上未必會安裝Python環境, 因此需進行[安裝相關套件](https://docs.ansible.com/projects/ansible/latest/os_guide/intro_zos.html#ansible-and-z-os-unix-system-services), 否則只有進行有限操作。
+
 * 使用SSH相較於基於WinRM的[傳輸檔案快](https://docs.ansible.com/projects/ansible/latest/os_guide/intro_windows.html#connecting-to-windows-nodes)。
 
 ## 1.6 Ansible安裝
+
+**安裝要求**
+
+* Control Node
+
+  > 在任何unix-like並可安裝Python環境的機器上, 例如: Red Hat、Ubuntu、macOS、BSDs, 如果是Windows則需透WSL。
+
+* Managed Node
+
+  > 在被管理的節點上無需安裝Ansible, 但需有Python環境, 以便執行Ansible產生的Python code, 另外須要一個</br>
+  > user account來供SSH 連線使用。
+
+**安裝方法**
+
+* 使用Python套件管理程式:
+ 
+  ```bash
+    $ python3 -m pip install --user ansible-core
+  ```
+
+* 使用OS套件管理程式:
+
+  ```bash 
+    ## 各種OS本身有自己的方式來管理套件, 例如: apt, dnf, yum等套件管理程式。
+
+    # Rokcey安裝Ansible
+    $ sudo dnf install ansible-core
+  ```
