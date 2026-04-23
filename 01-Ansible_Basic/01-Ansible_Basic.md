@@ -117,4 +117,45 @@ Ansible最初由Michael DeHaan編寫, 並於2015年被Red Hat收購([wiki](https
 
     # Rokcey安裝Ansible
     $ sudo dnf install ansible-core
+
+    # 檢查安裝版本
+    $ ansible --version
+
+     ansible [core 2.16.14]
+       config file = /etc/ansible/ansible.cfg
+       configured module search path = ['/home/edwin/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+       ansible python module location = /usr/lib/python3.12/site-packages/ansible
+       ansible collection location = /home/edwin/.ansible/collections:/usr/share/ansible/collections
+       executable location = /usr/bin/ansible
+       python version = 3.12.11 (main, Aug 14 2025, 00:00:00) [GCC 14.3.1 20250617 (Red Hat 14.3.1-2)] (/usr/bin/python3)
+       jinja version = 3.1.6
+       libyaml = True
   ```
+
+## 1.7 Configuration File
+
+**設定檔搜尋位置及順序**
+
+* ANSIBLE_CONFIG (environment variable if set)
+* ansible.cfg (in the current directory)
+* ~/.ansible.cfg (in the home directory)
+* /etc/ansible/ansible.cfg
+
+**設定檔使用INI格式, #或;被視為註釋。**
+
+```bash
+# some basic default values...
+inventory = /etc/ansible/hosts  ; This points to the file that lists your hosts       
+```
+
+> 注意: 切勿將ansible.cfg隨意放至當前目錄, 如果當前目錄為world-writable（任何使用者都能寫入）, 會導致安全性問題。
+
+**產生一份範例檔**
+
+```bash
+  # 產生一個完全註解的範例檔案
+  $ ansible-config init --disabled > ansible.cfg
+
+  # 也可以有一個更完整的檔案，包含現有的外掛
+  $ ansible-config init --disabled -t all > ansible.cfg
+```
